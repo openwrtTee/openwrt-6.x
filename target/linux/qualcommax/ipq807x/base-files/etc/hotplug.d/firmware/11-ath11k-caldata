@@ -32,6 +32,7 @@ case "$FIRMWARE" in
 	redmi,ax6-stock|\
 	tplink,deco-x80-5g|\
 	xiaomi,ax3600|\
+	inseego,fg2000|\
 	xiaomi,ax3600-stock|\
 	xiaomi,ax9000|\
 	xiaomi,ax9000-stock|\
