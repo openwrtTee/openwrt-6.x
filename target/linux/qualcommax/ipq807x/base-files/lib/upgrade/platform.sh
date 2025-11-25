@@ -202,6 +202,7 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;
+	nseego,fg2000|\
 	zyxel,nbg7815)
 		local config_mtdnum="$(find_mtd_index 0:bootconfig)"
 		[ -z "$config_mtdnum" ] && reboot
@@ -242,6 +243,7 @@ platform_copy_config() {
 	qnap,301w|\
 	spectrum,sax1v1k|\
 	zyxel,nbg7815|\
+	inseego,fg2000|\
 	verizon,cr1000a)
 		emmc_copy_config
 		;;
