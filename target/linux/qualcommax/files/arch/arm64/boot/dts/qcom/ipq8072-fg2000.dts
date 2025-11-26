@@ -327,8 +327,8 @@
 
 &switch {
 	status = "okay";
-	switch_lan_bmp = <(ESS_PORT3 | ESS_PORT4 | ESS_PORT5)>;
-	switch_wan_bmp = <ESS_PORT6>;
+	switch_lan_bmp = <(ESS_PORT4 | ESS_PORT5 | ESS_PORT6)>;
+	switch_wan_bmp = <ESS_PORT3>;
 	switch_mac_mode = <0>;
 	switch_mac_mode1 = <255>;
 	switch_mac_mode2 = <13>;
