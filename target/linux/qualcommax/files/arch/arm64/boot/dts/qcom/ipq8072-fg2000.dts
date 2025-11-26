@@ -303,26 +303,26 @@
 &dp3 {
 	status = "okay";
 	phy-handle = <&qca8075_2>;
-	label = "lan1";
+	label = "wan";
 };
 
 &dp4 {
 	status = "okay";
 	phy-handle = <&qca8075_3>;
-	label = "lan2";
+	label = "lan1";
 };
 
 &dp5 {
 	status = "okay";
 	phy-handle = <&qca8075_4>;
-	label = "lan3";
+	label = "lan2";
 };
 
 &dp6 {
 	status = "okay";
 	phy-mode = "usxgmii";
 	phy-handle = <&aqr108>;
-	label = "5g";
+	label = "lan3";
 };
 
 &switch {
