@@ -202,7 +202,12 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;
-	nseego,fg2000|\
+	inseego,fg2000)
+		CI_KERNPART="0:HLOS_1"
+		CI_ROOTPART="rootfs_1"
+		CI_DATAPART="rootfs_data"
+		emmc_do_upgrade "$1"
+		;;
 	zyxel,nbg7815)
 		local config_mtdnum="$(find_mtd_index 0:bootconfig)"
 		[ -z "$config_mtdnum" ] && reboot
