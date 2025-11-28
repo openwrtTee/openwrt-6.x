@@ -202,13 +202,8 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;
-	inseego,fg2000)
-		CI_KERNPART="0:HLOS_1"
-		CI_ROOTPART="rootfs_1"
-		CI_DATAPART="rootfs_data"
-		emmc_do_upgrade "$1"
-		;;
-	zyxel,nbg7815)
+	zyxel,nbg7815|\
+	inseego,fg2000))
 		local config_mtdnum="$(find_mtd_index 0:bootconfig)"
 		[ -z "$config_mtdnum" ] && reboot
 		part_num="$(hexdump -e '1/1 "%01x|"' -n 1 -s 168 -C /dev/mtd$config_mtdnum | cut -f 1 -d "|" | head -n1)"
