@@ -203,7 +203,7 @@ platform_do_upgrade() {
 		nand_do_upgrade "$1"
 		;;
 	zyxel,nbg7815|\
-	inseego,fg2000))
+	inseego,fg2000)
 		local config_mtdnum="$(find_mtd_index 0:bootconfig)"
 		[ -z "$config_mtdnum" ] && reboot
 		part_num="$(hexdump -e '1/1 "%01x|"' -n 1 -s 168 -C /dev/mtd$config_mtdnum | cut -f 1 -d "|" | head -n1)"
