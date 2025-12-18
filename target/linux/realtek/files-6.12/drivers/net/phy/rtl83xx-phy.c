@@ -144,23 +144,6 @@ static void rtl8380_phy_reset(struct phy_device *phydev)
 }
 
 /* Read the link and speed status of the 2 internal SGMII/1000Base-X
- * ports of the RTL838x SoCs
- */
-static int rtl8380_read_status(struct phy_device *phydev)
-{
-	int err;
-
-	err = genphy_read_status(phydev);
-
-	if (phydev->link) {
-		phydev->speed = SPEED_1000;
-		phydev->duplex = DUPLEX_FULL;
-	}
-
-	return err;
-}
-
-/* Read the link and speed status of the 2 internal SGMII/1000Base-X
  * ports of the RTL8393 SoC
  */
 static int rtl8393_read_status(struct phy_device *phydev)
@@ -205,7 +188,7 @@ static struct fw_header *rtl838x_request_fw(struct phy_device *phydev,
 	struct device *dev = &phydev->mdio.dev;
 	int err;
 	struct fw_header *h;
-	uint32_t checksum, my_checksum;
+	u32 checksum, my_checksum;
 
 	err = request_firmware(&fw, name, dev);
 	if (err < 0)
@@ -217,7 +200,7 @@ static struct fw_header *rtl838x_request_fw(struct phy_device *phydev,
 		goto out;
 	}
 
-	h = (struct fw_header *) fw->data;
+	h = (struct fw_header *)fw->data;
 	pr_info("Firmware loaded. Size %d, magic: %08x\n", fw->size, h->magic);
 
 	if (h->magic != 0x83808380) {
@@ -252,7 +235,7 @@ static void rtl821x_phy_setup_package_broadcast(struct phy_device *phydev, bool 
 	/* select page 0x266 */
 	phy_write_paged(phydev, RTL838X_PAGE_RAW, RTL8XXX_PAGE_SELECT, RTL821X_PAGE_PORT);
 	/* set phy id and target broadcast bitmap in register 0x16 on page 0x266 */
-	phy_write_paged(phydev, RTL838X_PAGE_RAW, 0x16, (enable?0xff00:0x00) | mac);
+	phy_write_paged(phydev, RTL838X_PAGE_RAW, 0x16, (enable ? 0xff00 : 0x00) | mac);
 	/* return to main page 0 */
 	phy_write_paged(phydev, RTL838X_PAGE_RAW, RTL8XXX_PAGE_SELECT, RTL8XXX_PAGE_MAIN);
 	/* write to 0x0 to register 0x1d on main page 0 */
@@ -418,7 +401,7 @@ static int rtl8380_configure_ext_rtl8218b(struct phy_device *phydev)
 	phydev_info(phydev, "patch chip revision %d\n", val);
 
 	for (int i = 0; rtl8380_rtl8218b_perchip[i * 3] &&
-	                rtl8380_rtl8218b_perchip[i * 3 + 1]; i++) {
+			rtl8380_rtl8218b_perchip[i * 3 + 1]; i++) {
 		patchphy = get_package_phy(phydev, rtl8380_rtl8218b_perchip[i * 3]);
 		phy_write_paged(patchphy, RTL838X_PAGE_RAW,
 				rtl8380_rtl8218b_perchip[i * 3 + 1],
@@ -450,7 +433,7 @@ static int rtl8380_configure_ext_rtl8218b(struct phy_device *phydev)
 
 	for (int i = 0; rtl8218B_6276B_rtl8380_perport[i * 2]; i++) {
 		phy_write_paged(phydev, RTL838X_PAGE_RAW, rtl8218B_6276B_rtl8380_perport[i * 2],
-		                rtl8218B_6276B_rtl8380_perport[i * 2 + 1]);
+				rtl8218B_6276B_rtl8380_perport[i * 2 + 1]);
 	}
 
 	/* Disable broadcast ID */
@@ -735,7 +718,7 @@ static int rtl8380_configure_rtl8214fc(struct phy_device *phydev)
 	phy_write_paged(phydev, 0, RTL821XEXT_MEDIA_PAGE_SELECT, RTL821X_MEDIA_PAGE_COPPER);
 
 	for (int i = 0; rtl8380_rtl8214fc_perchip[i * 3] &&
-	                rtl8380_rtl8214fc_perchip[i * 3 + 1]; i++) {
+			rtl8380_rtl8214fc_perchip[i * 3 + 1]; i++) {
 		u32 page = 0;
 
 		if (rtl8380_rtl8214fc_perchip[i * 3 + 1] == 0x1f)
@@ -792,7 +775,7 @@ static int rtl8380_configure_rtl8214fc(struct phy_device *phydev)
 
 	for (int i = 0; rtl8380_rtl8214fc_perport[i * 2]; i++) {
 		phy_write_paged(phydev, RTL838X_PAGE_RAW, rtl8380_rtl8214fc_perport[i * 2],
-		                rtl8380_rtl8214fc_perport[i * 2 + 1]);
+				rtl8380_rtl8214fc_perport[i * 2 + 1]);
 	}
 
 	/* Disable broadcast ID */
@@ -803,127 +786,6 @@ static int rtl8380_configure_rtl8214fc(struct phy_device *phydev)
 		phy_write_paged(phydev, RTL838X_PAGE_RAW, RTL8XXX_PAGE_SELECT, RTL8XXX_PAGE_MAIN);
 		phy_write_paged(phydev, RTL838X_PAGE_RAW, RTL821XEXT_MEDIA_PAGE_SELECT, RTL821X_MEDIA_PAGE_AUTO);
 	}
-
-	return 0;
-}
-
-static int rtl8380_configure_serdes(struct phy_device *phydev)
-{
-	u32 v;
-	u32 sds_conf_value;
-	int i;
-	struct fw_header *h;
-	u32 *rtl8380_sds_take_reset;
-	u32 *rtl8380_sds_common;
-	u32 *rtl8380_sds01_qsgmii_6275b;
-	u32 *rtl8380_sds23_qsgmii_6275b;
-	u32 *rtl8380_sds4_fiber_6275b;
-	u32 *rtl8380_sds5_fiber_6275b;
-	u32 *rtl8380_sds_reset;
-	u32 *rtl8380_sds_release_reset;
-
-	phydev_info(phydev, "Detected internal RTL8380 SERDES\n");
-
-	h = rtl838x_request_fw(phydev, &rtl838x_8218b_fw, FIRMWARE_838X_8380_1);
-	if (!h)
-		return -1;
-
-	if (h->magic != 0x83808380) {
-		phydev_err(phydev, "Wrong firmware file: magic number mismatch.\n");
-		return -1;
-	}
-
-	rtl8380_sds_take_reset = (void *)h + sizeof(struct fw_header) + h->parts[0].start;
-
-	rtl8380_sds_common = (void *)h + sizeof(struct fw_header) + h->parts[1].start;
-
-	rtl8380_sds01_qsgmii_6275b = (void *)h + sizeof(struct fw_header) + h->parts[2].start;
-
-	rtl8380_sds23_qsgmii_6275b = (void *)h + sizeof(struct fw_header) + h->parts[3].start;
-
-	rtl8380_sds4_fiber_6275b = (void *)h + sizeof(struct fw_header) + h->parts[4].start;
-
-	rtl8380_sds5_fiber_6275b = (void *)h + sizeof(struct fw_header) + h->parts[5].start;
-
-	rtl8380_sds_reset = (void *)h + sizeof(struct fw_header) + h->parts[6].start;
-
-	rtl8380_sds_release_reset = (void *)h + sizeof(struct fw_header) + h->parts[7].start;
-
-	/* Back up serdes power off value */
-	sds_conf_value = sw_r32(RTL838X_SDS_CFG_REG);
-	pr_info("SDS power down value: %x\n", sds_conf_value);
-
-	/* take serdes into reset */
-	i = 0;
-	while (rtl8380_sds_take_reset[2 * i]) {
-		sw_w32(rtl8380_sds_take_reset[2 * i + 1], rtl8380_sds_take_reset[2 * i]);
-		i++;
-		udelay(1000);
-	}
-
-	/* apply common serdes patch */
-	i = 0;
-	while (rtl8380_sds_common[2 * i]) {
-		sw_w32(rtl8380_sds_common[2 * i + 1], rtl8380_sds_common[2 * i]);
-		i++;
-		udelay(1000);
-	}
-
-	/* internal R/W enable */
-	sw_w32(3, RTL838X_INT_RW_CTRL);
-
-	/* SerDes ports 4 and 5 are FIBRE ports */
-	sw_w32_mask(0x7 | 0x38, 1 | (1 << 3), RTL838X_INT_MODE_CTRL);
-
-	/* SerDes module settings, SerDes 0-3 are QSGMII */
-	v = 0x6 << 25 | 0x6 << 20 | 0x6 << 15 | 0x6 << 10;
-	/* SerDes 4 and 5 are 1000BX FIBRE */
-	v |= 0x4 << 5 | 0x4;
-	sw_w32(v, RTL838X_SDS_MODE_SEL);
-
-	pr_info("PLL control register: %x\n", sw_r32(RTL838X_PLL_CML_CTRL));
-	sw_w32_mask(0xfffffff0, 0xaaaaaaaf & 0xf, RTL838X_PLL_CML_CTRL);
-	i = 0;
-	while (rtl8380_sds01_qsgmii_6275b[2 * i]) {
-		sw_w32(rtl8380_sds01_qsgmii_6275b[2 * i + 1],
-		       rtl8380_sds01_qsgmii_6275b[2 * i]);
-		i++;
-	}
-
-	i = 0;
-	while (rtl8380_sds23_qsgmii_6275b[2 * i]) {
-		sw_w32(rtl8380_sds23_qsgmii_6275b[2 * i + 1], rtl8380_sds23_qsgmii_6275b[2 * i]);
-		i++;
-	}
-
-	i = 0;
-	while (rtl8380_sds4_fiber_6275b[2 * i]) {
-		sw_w32(rtl8380_sds4_fiber_6275b[2 * i + 1], rtl8380_sds4_fiber_6275b[2 * i]);
-		i++;
-	}
-
-	i = 0;
-	while (rtl8380_sds5_fiber_6275b[2 * i]) {
-		sw_w32(rtl8380_sds5_fiber_6275b[2 * i + 1], rtl8380_sds5_fiber_6275b[2 * i]);
-		i++;
-	}
-
-	i = 0;
-	while (rtl8380_sds_reset[2 * i]) {
-		sw_w32(rtl8380_sds_reset[2 * i + 1], rtl8380_sds_reset[2 * i]);
-		i++;
-	}
-
-	i = 0;
-	while (rtl8380_sds_release_reset[2 * i]) {
-		sw_w32(rtl8380_sds_release_reset[2 * i + 1], rtl8380_sds_release_reset[2 * i]);
-		i++;
-	}
-
-	pr_info("SDS power down value now: %x\n", sw_r32(RTL838X_SDS_CFG_REG));
-	sw_w32(sds_conf_value, RTL838X_SDS_CFG_REG);
-
-	pr_info("Configuration of SERDES done\n");
 
 	return 0;
 }
@@ -1098,25 +960,6 @@ static int rtl8218b_config_init(struct phy_device *phydev)
 	return 0;
 }
 
-static int rtl838x_serdes_probe(struct phy_device *phydev)
-{
-	int addr = phydev->mdio.addr;
-
-	if (soc_info.family != RTL8380_FAMILY_ID)
-		return -ENODEV;
-	if (addr < 24)
-		return -ENODEV;
-
-	/* On the RTL8380M, PHYs 24-27 connect to the internal SerDes */
-	if (soc_info.id == 0x8380) {
-		if (addr == 24)
-			return rtl8380_configure_serdes(phydev);
-		return 0;
-	}
-
-	return -ENODEV;
-}
-
 static int rtl8393_serdes_probe(struct phy_device *phydev)
 {
 	int addr = phydev->mdio.addr;
@@ -1223,17 +1066,6 @@ static struct phy_driver rtl83xx_phy_driver[] = {
 		.suspend	= genphy_suspend,
 		.write_mmd	= rtl821x_write_mmd,
 		.write_page	= rtl821x_write_page,
-	},
-	{
-		PHY_ID_MATCH_MODEL(PHY_ID_RTL8218B_I),
-		.name		= "Realtek RTL8380 SERDES",
-		.features	= PHY_GBIT_FIBRE_FEATURES,
-		.probe		= rtl838x_serdes_probe,
-		.read_page	= rtl821x_read_page,
-		.write_page	= rtl821x_write_page,
-		.suspend	= genphy_suspend,
-		.resume		= genphy_resume,
-		.read_status	= rtl8380_read_status,
 	},
 	{
 		PHY_ID_MATCH_MODEL(PHY_ID_RTL8393_I),

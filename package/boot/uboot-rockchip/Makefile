@@ -184,6 +184,13 @@ define U-Boot/rk3528/Default
   TPL:=$(RK3528_TPL)
 endef
 
+define U-Boot/mangopi-m28k-rk3528
+  $(U-Boot/rk3528/Default)
+  NAME:=MangoPi M28K
+  BUILD_DEVICES:= \
+    widora_mangopi-m28k
+endef
+
 define U-Boot/radxa-e20c-rk3528
   $(U-Boot/rk3528/Default)
   NAME:=E20C
@@ -384,6 +391,13 @@ define U-Boot/generic-rk3576
     friendlyarm_nanopi-r76s
 endef
 
+define U-Boot/photonicat2-rk3576
+  $(U-Boot/rk3576/Default)
+  NAME:=Photonicat2
+  BUILD_DEVICES:= \
+    ariaboard_photonicat2
+endef
+
 define U-Boot/rock-4d-rk3576
   $(U-Boot/rk3576/Default)
   NAME:=ROCK 4D
@@ -508,6 +522,7 @@ UBOOT_TARGETS := \
   roc-cc-rk3328 \
   rock64-rk3328 \
   rock-pi-e-rk3328 \
+  mangopi-m28k-rk3528 \
   radxa-e20c-rk3528 \
   rock-2-rk3528 \
   nanopi-r3s-rk3566 \
@@ -532,6 +547,7 @@ UBOOT_TARGETS := \
   rock-3b-rk3568 \
   sige3-rk3568 \
   generic-rk3576 \
+  photonicat2-rk3576 \
   rock-4d-rk3576 \
   cyber3588-aib-rk3588 \
   nanopc-t6-rk3588 \

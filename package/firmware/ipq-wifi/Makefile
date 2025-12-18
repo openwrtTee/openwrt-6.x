@@ -6,9 +6,9 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL=$(PROJECT_GIT)/project/firmware/qca-wireless.git
-PKG_SOURCE_DATE:=2025-11-15
-PKG_SOURCE_VERSION:=7c6b7545f69a3ef3ddaaff68fc97e9e172117e2e
-PKG_MIRROR_HASH:=ac77840bafd111b3cc3d6cfc7a3b770fdaabb929209c38cd2109be2efd575dae
+PKG_SOURCE_DATE:=2025-12-15
+PKG_SOURCE_VERSION:=059b7114c77b861b05784b07f0fa129c2591d171
+PKG_MIRROR_HASH:=6a717318ccf0e16cda89f96c79df6bcf754b291e249495f0e8b618da9b5be709
 PKG_FLAGS:=nonshared
 
 include $(INCLUDE_DIR)/package.mk
@@ -105,6 +105,7 @@ ALLWIFIBOARDS:= \
 	zte_mf287 \
 	zte_mf287plus \
 	zyxel_nbg7815 \
+	zyxel_nwa210ax \
 	anysafe_e1 \
 	cmiot_ax18 \
 	jdcloud_re-ss-01 \
@@ -296,6 +297,7 @@ $(eval $(call generate-ipq-wifi-package,zte_mf286c,ZTE MF286C))
 $(eval $(call generate-ipq-wifi-package,zte_mf287,ZTE MF287))
 $(eval $(call generate-ipq-wifi-package,zte_mf287plus,ZTE MF287Plus))
 $(eval $(call generate-ipq-wifi-package,zyxel_nbg7815,Zyxel NBG7815))
+$(eval $(call generate-ipq-wifi-package,zyxel_nwa210ax,Zyxel NWA210AX))
 $(eval $(call generate-ipq-wifi-package,anysafe_e1,AnySafe E1))
 $(eval $(call generate-ipq-wifi-package,cmiot_ax18,CMIOT AX18))
 $(eval $(call generate-ipq-wifi-package,jdcloud_re-ss-01,JDCloud RE-SS-01))
