@@ -166,7 +166,7 @@ platform_do_upgrade() {
 		CI_ROOTPART="rootfs"
 		CI_DATAPART="rootfs_data"
 		emmc_do_upgrade "$1"
-		;;
+		;;		
 	tplink,deco-x80-5g|\
 	tplink,eap620hd-v1|\
 	tplink,eap660hd-v1)
@@ -202,8 +202,7 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;
-	zyxel,nbg7815|\
-	inseego,fg2000)
+	zyxel,nbg7815)
 		local config_mtdnum="$(find_mtd_index 0:bootconfig)"
 		[ -z "$config_mtdnum" ] && reboot
 		part_num="$(hexdump -e '1/1 "%01x|"' -n 1 -s 168 -C /dev/mtd$config_mtdnum | cut -f 1 -d "|" | head -n1)"
@@ -216,6 +215,11 @@ platform_do_upgrade() {
 		fi
 		emmc_do_upgrade "$1"
 		;;
+	sinseego,fg2000)
+		CI_KERNPART="0:HLOS_1"
+		CI_ROOTPART="rootfs_1"
+		emmc_do_upgrade "$1"
+		;;		
 	verizon,cr1000a)
 		CI_KERNPART="0:HLOS"
 		CI_ROOTPART="rootfs"
