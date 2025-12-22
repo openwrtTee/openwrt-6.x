@@ -122,7 +122,7 @@ After compilation, the firmware will be in the `bin/targets` directory.
 cd libwrt
 
 # Pull the latest code
-git fetch && git reset --hard origin/k6.12-nss
+git fetch && git reset --hard origin/main-nss
 
 # Update feeds
 ./scripts/feeds update -a && ./scripts/feeds install -a
