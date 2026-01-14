@@ -121,7 +121,7 @@ make -j1 V=s
 cd libwrt
 
 # 拉取最新代码
-git fetch && git reset --hard origin/k6.12-nss
+git fetch && git reset --hard origin/main-nss
 
 # 更新 feeds
 ./scripts/feeds update -a && ./scripts/feeds install -a

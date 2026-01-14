@@ -54,8 +54,14 @@ platform_do_upgrade() {
 	glinet,gl-axt1800|\
 	netgear,wax214|\
 	lg,gapd-7500|\
-	kt,ar06-012h|\
+	kt,ar06-012h)
+		nand_do_upgrade "$1"
+		;;
 	qihoo,360v6)
+		CI_UBIPART="rootfs_1"
+		qihoo_bootconfig_toggle_rootfs "0:bootconfig"
+		remove_oem_ubi_volume wifi_fw
+		remove_oem_ubi_volume ubi_rootfs
 		nand_do_upgrade "$1"
 		;;
 	netgear,wax610|\

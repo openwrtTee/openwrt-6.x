@@ -6,9 +6,9 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL=$(PROJECT_GIT)/project/firmware/qca-wireless.git
-PKG_SOURCE_DATE:=2025-12-15
-PKG_SOURCE_VERSION:=059b7114c77b861b05784b07f0fa129c2591d171
-PKG_MIRROR_HASH:=6a717318ccf0e16cda89f96c79df6bcf754b291e249495f0e8b618da9b5be709
+PKG_SOURCE_DATE:=2025-12-25
+PKG_SOURCE_VERSION:=ed56ad0574b2846ca4be2cd5226d8f82dc646650
+PKG_MIRROR_HASH:=77cc1b6be9c2c338aa0c24fc4b1b1eac0f23c5a98e59f01309da3cf05e5c8c8c
 PKG_FLAGS:=nonshared
 
 include $(INCLUDE_DIR)/package.mk
@@ -57,14 +57,17 @@ ALLWIFIBOARDS:= \
 	linksys_mx4200 \
 	linksys_mx5300 \
 	linksys_mx5500 \
+	linksys_mx6200 \
 	linksys_mx8500 \
 	linksys_spnmx56 \
 	linksys_whw03 \
 	meraki_mr30h \
+	meraki_underdog \
 	meraki_z3 \
 	netgear_lbr20 \
 	netgear_rax120v2 \
 	netgear_rbk20 \
+	netgear_rbk40 \
 	netgear_sxk80 \
 	netgear_wax214 \
 	netgear_wax218 \
@@ -249,14 +252,17 @@ $(eval $(call generate-ipq-wifi-package,linksys_mx2000,Linksys MX2000))
 $(eval $(call generate-ipq-wifi-package,linksys_mx4200,Linksys MX4200))
 $(eval $(call generate-ipq-wifi-package,linksys_mx5300,Linksys MX5300))
 $(eval $(call generate-ipq-wifi-package,linksys_mx5500,Linksys MX5500))
+$(eval $(call generate-ipq-wifi-package,linksys_mx6200,Linksys MX6200))
 $(eval $(call generate-ipq-wifi-package,linksys_mx8500,Linksys MX8500))
 $(eval $(call generate-ipq-wifi-package,linksys_spnmx56,Linksys SPNMX56))
 $(eval $(call generate-ipq-wifi-package,linksys_whw03,Linksys WHW03))
 $(eval $(call generate-ipq-wifi-package,meraki_mr30h,Meraki MR30H))
+$(eval $(call generate-ipq-wifi-package,meraki_underdog,Meraki underdog))
 $(eval $(call generate-ipq-wifi-package,meraki_z3,Meraki Z3))
 $(eval $(call generate-ipq-wifi-package,netgear_lbr20,Netgear LBR20))
 $(eval $(call generate-ipq-wifi-package,netgear_rax120v2,Netgear RAX120v2))
 $(eval $(call generate-ipq-wifi-package,netgear_rbk20,Netgear RBK20))
+$(eval $(call generate-ipq-wifi-package,netgear_rbk40,Netgear RBK40))
 $(eval $(call generate-ipq-wifi-package,netgear_sxk80,Netgear SXK80))
 $(eval $(call generate-ipq-wifi-package,netgear_wax214,Netgear WAX214))
 $(eval $(call generate-ipq-wifi-package,netgear_wax218,Netgear WAX218))
