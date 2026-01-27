@@ -42,7 +42,7 @@
  /* ipset.c */
 --- a/src/forward.c
 +++ b/src/forward.c
-@@ -801,7 +801,7 @@ static size_t process_reply(struct dns_h
+@@ -803,7 +803,7 @@ static size_t process_reply(struct dns_h
  	  cache_secure = 0;
  	}
        
