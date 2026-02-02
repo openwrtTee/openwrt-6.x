@@ -1,7 +1,7 @@
 PART_NAME=firmware
 REQUIRE_IMAGE_METADATA=1
 
-RAMFS_COPY_BIN='fw_printenv fw_setenv head'
+RAMFS_COPY_BIN='fw_printenv fw_setenv head seq'
 RAMFS_COPY_DATA='/etc/fw_env.config /var/lock/fw_printenv.lock'
 
 remove_oem_ubi_volume() {
@@ -86,6 +86,7 @@ platform_do_upgrade() {
 		nand_do_upgrade "$1"
 		;;
 	tplink,eap610od|\
+	tplink,eap620-hd-v3|\
 	tplink,eap623od-hd-v1|\
 	tplink,eap625od-hd-v1)
 		remove_oem_ubi_volume ubi_rootfs

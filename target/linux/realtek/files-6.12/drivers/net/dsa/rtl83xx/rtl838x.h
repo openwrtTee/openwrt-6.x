@@ -42,14 +42,6 @@
 #define RTL930X_STAT_CTRL			(0x3248)
 #define RTL931X_STAT_CTRL			(0x5720)
 
-/* Registers of the internal Serdes of the 8390 */
-#define RTL8390_SDS0_1_XSG0			(0xA000)
-#define RTL8390_SDS0_1_XSG1			(0xA100)
-#define RTL839X_SDS12_13_XSG0			(0xB800)
-#define RTL839X_SDS12_13_XSG1			(0xB900)
-#define RTL839X_SDS12_13_PWR0			(0xb880)
-#define RTL839X_SDS12_13_PWR1			(0xb980)
-
 /* VLAN registers */
 #define RTL838X_VLAN_CTRL			(0x3A74)
 #define RTL838X_VLAN_PROFILE(idx)		(0x3A88 + ((idx) << 2))
@@ -1234,7 +1226,7 @@ struct rtl838x_reg {
 	void (*enable_mcast_flood)(int port, bool enable);
 	void (*enable_bcast_flood)(int port, bool enable);
 	void (*set_static_move_action)(int port, bool forward);
-	void (*stp_get)(struct rtl838x_switch_priv *priv, u16 msti, u32 port_state[]);
+	int (*stp_get)(struct rtl838x_switch_priv *priv, u16 msti, int port, u32 port_state[]);
 	void (*stp_set)(struct rtl838x_switch_priv *priv, u16 msti, u32 port_state[]);
 	int  (*mac_force_mode_ctrl)(int port);
 	int  (*mac_port_ctrl)(int port);
@@ -1293,7 +1285,6 @@ struct rtl838x_switch_priv {
 	struct device *dev;
 	u16 id;
 	u16 family_id;
-	char version;
 	struct rtl838x_port ports[57];
 	struct phylink_pcs *pcs[57];
 	struct mutex reg_mutex;		/* Mutex for individual register manipulations */
