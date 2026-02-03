@@ -38,6 +38,9 @@ asus,rt-ax89x|\
 qnap,301w)
 	ubootenv_add_mtd "0:appsblenv" "0x0" "0x20000" "0x20000"
 	;;
+inseego,fg2000)
+	ubootenv_add_mmc "0:APPSBLENV" "0x0" "0x20000" "0x10000" "1"
+	;;
 dynalink,dl-wrx36|\
 netgear,rax120v2|\
 netgear,sxr80|\
