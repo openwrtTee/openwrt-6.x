@@ -617,7 +617,6 @@ define Device/verizon_cr1000a
 	$(call Device/EmmcImage)
 	DEVICE_VENDOR := Verizon
 	DEVICE_MODEL := CR1000A
-	BLOCKSIZE := 128k
 	PAGESIZE := 2048
 	SOC := ipq8072
 	DEVICE_DTS_CONFIG := config@verizon_cr1000a
@@ -632,7 +631,6 @@ define Device/inseego_fg2000
     DEVICE_MODEL := Fg2000
     DEVICE_DTS_CONFIG := config@hk09
     SOC := ipq8072
-	KERNEL_SIZE := 6144k
 	DEVICE_PACKAGES := kmod-hwmon-gpiofan kmod-ath11k-ahb kmod-phy-aquantia kmod-fs-f2fs f2fs-tools kmod-usb3 kmod-usb-dwc3-qcom
 	IMAGES += factory.bin
 	IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs
