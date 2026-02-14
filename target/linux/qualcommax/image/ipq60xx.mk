@@ -353,7 +353,7 @@ define Device/redmi_ax5-jdcloud
 	SOC := ipq6000
 	DEVICE_DTS_CONFIG := config@cp03-c1
 	DEVICE_PACKAGES := ipq-wifi-redmi_ax5-jdcloud
-	IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-rootfs | append-metadata
+	IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-rootfs | pad-rootfs | pad-to 64k
 endef
 TARGET_DEVICES += redmi_ax5-jdcloud
 
