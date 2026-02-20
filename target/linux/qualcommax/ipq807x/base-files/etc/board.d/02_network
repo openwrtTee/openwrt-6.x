@@ -45,7 +45,7 @@ ipq807x_setup_interfaces()
 	redmi,ax6|\
 	redmi,ax6-stock|\
 	spectrum,sax1v1k|\
-    inseego,fg2000|\
+	inseego,fg2000|\
 	xiaomi,ax3600|\
 	xiaomi,ax3600-stock)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
