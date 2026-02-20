@@ -47,7 +47,7 @@
  	mutex_lock(&pn->all_ppp_mutex);
 @@ -3518,13 +3541,40 @@ ppp_connect_channel(struct channel *pch,
  	++ppp->n_channels;
- 	pch->ppp = ppp;
+ 	rcu_assign_pointer(pch->ppp, ppp);
  	refcount_inc(&ppp->file.refcnt);
 +
 +	/* Set the netdev priv flag if the prototype
@@ -73,7 +73,7 @@
  	ret = 0;
 -
   outl:
- 	write_unlock_bh(&pch->upl);
+ 	spin_unlock(&pch->upl);
   out:
  	mutex_unlock(&pn->all_ppp_mutex);
 +
