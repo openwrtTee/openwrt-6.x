@@ -56,6 +56,15 @@ case "$FIRMWARE" in
 	tcl,linkhub-hh500v)
 		caldata_extract "0:ART" 0x1000 0x20000
 		;;
+	netgear,rbr750|\
+	netgear,rbs750)
+		caldata_extract "0:art" 0x1000 0x20000
+		label_mac=$(get_mac_label_dt)
+		ath11k_patch_mac $(macaddr_add $label_mac 3) 0
+		ath11k_patch_mac $(macaddr_add $label_mac 2) 1
+		ath11k_patch_mac $(macaddr_add $label_mac 4) 2
+		ath11k_set_macflag
+		;;
 	prpl,haze|\
 	spectrum,sax1v1k|\
 	verizon,cr1000a)
@@ -64,6 +73,17 @@ case "$FIRMWARE" in
 	tplink,eap620hd-v1|\
 	tplink,eap660hd-v1)
 		caldata_from_file "/tmp/factory_data/radio" 0 0x20000
+		label_mac=$(get_mac_binary /tmp/factory_data/default-mac 0)
+		ath11k_patch_mac $label_mac 1
+		ath11k_patch_mac $(macaddr_add $label_mac 1) 0
+		ath11k_set_macflag
+		;;
+	zyxel,nwa110ax)
+		caldata_extract "0:art" 0x1000 0x20000
+		label_mac=$(get_mac_label)
+		ath11k_patch_mac $(macaddr_add $label_mac 2) 0
+		ath11k_patch_mac $(macaddr_add $label_mac 1) 1
+		ath11k_set_macflag
 		;;
 	esac
 	;;

@@ -52,6 +52,8 @@ platform_do_upgrade() {
 	zn,m2|\
 	glinet,gl-ax1800|\
 	glinet,gl-axt1800|\
+	netgear,rbr350|\
+	netgear,rbs350|\
 	netgear,wax214|\
 	lg,gapd-7500|\
 	kt,ar06-012h)
