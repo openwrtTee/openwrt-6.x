@@ -102,7 +102,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  		if (!sdata->bss)
  			return;
  
-@@ -1426,6 +1430,14 @@ int ieee80211_do_open(struct wireless_de
+@@ -1426,6 +1431,14 @@ int ieee80211_do_open(struct wireless_de
  			}
  
  			netif_carrier_on(dev);
