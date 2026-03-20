@@ -141,7 +141,7 @@ TARGET_DEVICES += linksys_mr7350
 define Device/linksys_mr7500
 	$(call Device/linksys_mr)
 	DEVICE_MODEL := MR7500
-	SOC := ipq6010
+	SOC := ipq6018
 	NAND_SIZE := 512m
 	IMAGE_SIZE := 147456k
 	DEVICE_PACKAGES += ipq-wifi-linksys_mr7500 ath11k-firmware-qcn9074
@@ -225,18 +225,23 @@ define Device/qihoo_360v6
 endef
 TARGET_DEVICES += qihoo_360v6
 
-define Device/tplink_eap610od
+define Device/tplink_eap6xx-common
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
 	DEVICE_VENDOR := TP-Link
-	DEVICE_MODEL := EAP610-Outdoor
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
-	SOC := ipq6010
-	DEVICE_DTS_CONFIG := config@cp03-c1
-	DEVICE_PACKAGES := ipq-wifi-tplink_eap610od
+	SOC := ipq6018
+	DEVICE_PACKAGES := kmod-phy-realtek
 	IMAGES += web-ui-factory.bin
 	IMAGE/web-ui-factory.bin := append-ubi | tplink-image-2022
+endef
+
+define Device/tplink_eap610od
+	$(call Device/tplink_eap6xx-common)
+	DEVICE_MODEL := EAP610-Outdoor
+	DEVICE_VARIANT := v1
+	DEVICE_PACKAGES += ipq-wifi-tplink_eap610od
 	TPLINK_SUPPORT_STRING := SupportList:\r\n \
 		EAP610-Outdoor(TP-Link|UN|AX1800-D):1.0\r\n \
 		EAP610-Outdoor(TP-Link|JP|AX1800-D):1.0\r\n \
@@ -245,34 +250,20 @@ endef
 TARGET_DEVICES += tplink_eap610od
 
 define Device/tplink_eap623od-hd-v1
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
-	DEVICE_VENDOR := TP-Link
-	DEVICE_MODEL := EAP623-Outdoor HD v1
-	BLOCKSIZE := 128k
-	PAGESIZE := 2048
-	SOC := ipq6010
-	DEVICE_DTS_CONFIG := config@cp03-c1
-	DEVICE_PACKAGES := ipq-wifi-tplink_eap623od-hd-v1 kmod-phy-realtek
-	IMAGES += web-ui-factory.bin
-	IMAGE/web-ui-factory.bin := append-ubi | tplink-image-2022
+	$(call Device/tplink_eap6xx-common)
+	DEVICE_MODEL := EAP623-Outdoor HD
+	DEVICE_VARIANT := v1
+	DEVICE_PACKAGES += ipq-wifi-tplink_eap623od-hd-v1
 	TPLINK_SUPPORT_STRING := SupportList:\r\n \
 		EAP623-Outdoor HD(TP-Link|UN|AX1800-D):1.0
 endef
 TARGET_DEVICES += tplink_eap623od-hd-v1
 
 define Device/tplink_eap625od-hd-v1
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
-	DEVICE_VENDOR := TP-Link
-	DEVICE_MODEL := EAP625-Outdoor HD v1 and v1.6
-	BLOCKSIZE := 128k
-	PAGESIZE := 2048
-	SOC := ipq6010
-	DEVICE_DTS_CONFIG := config@cp03-c1
-	DEVICE_PACKAGES := ipq-wifi-tplink_eap625od-hd-v1
-	IMAGES += web-ui-factory.bin
-	IMAGE/web-ui-factory.bin := append-ubi | tplink-image-2022
+	$(call Device/tplink_eap6xx-common)
+	DEVICE_MODEL := EAP625-Outdoor HD
+	DEVICE_VARIANT := v1
+	DEVICE_PACKAGES += ipq-wifi-tplink_eap625od-hd-v1
 	TPLINK_SUPPORT_STRING := SupportList:\r\n \
 		EAP625-Outdoor HD(TP-Link|UN|AX1800-D):1.0\r\n \
 		EAP625-Outdoor HD(TP-Link|CA|AX1800-D):1.0\r\n \
@@ -285,7 +276,8 @@ define Device/tplink_eap620-hd-v3
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
 	DEVICE_VENDOR := TP-Link
-	DEVICE_MODEL := EAP620 HD v3
+	DEVICE_MODEL := EAP620 HD
+	DEVICE_VARIANT := v3
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
 	SOC := ipq6018
@@ -297,7 +289,6 @@ define Device/tplink_eap620-hd-v3
 		EAP620 HD(TP-Link|CA|AX1800-D):3.0\r\n \
 		EAP620 HD(TP-Link|JP|AX1800-D):3.0\r\n \
 		EAP620 HD(TP-Link|EG|AX1800-D):3.0\r\n
-
 endef
 TARGET_DEVICES += tplink_eap620-hd-v3
 
@@ -308,8 +299,8 @@ define Device/yuncore_fap650
 	DEVICE_MODEL := FAP650
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
-	SOC := ipq6000
 	DEVICE_DTS_CONFIG := config@cp03-c1
+	SOC := ipq6018
 	DEVICE_PACKAGES := ipq-wifi-yuncore_fap650
 	IMAGES := factory.ubi factory.ubin sysupgrade.bin
 	IMAGE/factory.ubin := append-ubi | qsdk-ipq-factory-nand
