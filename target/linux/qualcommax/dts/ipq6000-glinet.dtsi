@@ -70,16 +70,16 @@
 };
 
 &tlmm {
-	hsuart_pins: hsuart-pins {
-		pins = "gpio57", "gpio58";
-		function = "blsp4_uart";
+	tluart_pins: tluart-pins {
+		pins = "gpio75", "gpio76";
+		function = "blsp3_uart";
 		drive-strength = <8>;
 		bias-disable;
 	};
 
-	tluart_pins: tluart-pins {
-		pins = "gpio75", "gpio76";
-		function = "blsp3_uart";
+	hsuart_pins: hsuart-pins {
+		pins = "gpio57", "gpio58";
+		function = "blsp4_uart";
 		drive-strength = <8>;
 		bias-disable;
 	};
@@ -105,8 +105,6 @@
 	};
 
 	nand@0 {
-		#address-cells = <1>;
-		#size-cells = <1>;
 		reg = <0>;
 
 		nand-ecc-strength = <4>;
