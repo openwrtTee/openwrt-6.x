@@ -66,6 +66,16 @@ platform_do_upgrade() {
 		remove_oem_ubi_volume ubi_rootfs
 		nand_do_upgrade "$1"
 		;;
+	jdcloud,re-ss-01|\
+	jdcloud,re-cs-02|\
+	jdcloud,re-cs-07|\
+	link,nn6000-v1|\
+	link,nn6000-v2|\
+	redmi,ax5-jdcloud)
+		kernelname="0:HLOS"
+		rootfsname="rootfs"
+		mmc_do_upgrade "$1"
+		;;
 	netgear,wax610|\
 	netgear,wax610y)
 		remove_oem_ubi_volume wifi_fw
@@ -105,16 +115,6 @@ platform_do_upgrade() {
 		fw_setenv owrt_bootcount 0
 		fw_setenv owrt_slotactive $((1 - active))
 		nand_do_upgrade "$1"
-		;;
-	jdcloud,re-ss-01|\
-	jdcloud,re-cs-02|\
-	jdcloud,re-cs-07|\
-	link,nn6000-v1|\
-	link,nn6000-v2|\
-	redmi,ax5-jdcloud)
-		kernelname="0:HLOS"
-		rootfsname="rootfs"
-		mmc_do_upgrade "$1"
 		;;
 	*)
 		default_do_upgrade "$1"
