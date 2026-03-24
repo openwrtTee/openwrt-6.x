@@ -11,9 +11,10 @@ ipq60xx_setup_interfaces()
 	local board="$1"
 
 	case "$board" in
-	link,nn6000-v1|\
 	8devices,mango-dvk|\
-	glinet,gl-axt1800)
+	glinet,gl-axt1800|\
+	link,nn6000-v1|\
+	lg,gapd-7500)
 		ucidef_set_interfaces_lan_wan "lan1 lan2" "wan"
 		;;
 	alfa-network,ap120c-ax)
@@ -23,17 +24,14 @@ ipq60xx_setup_interfaces()
 	netgear,rbs350)
 		ucidef_set_interface_lan "lan1 lan2" "dhcp"
 		;;
+	glinet,gl-ax1800|\
 	jdcloud,re-cs-02|\
 	link,nn6000-v2|\
-	glinet,gl-ax1800|\
 	linksys,mr7350|\
 	linksys,mr7500|\
 	kt,ar06-012h|\
 	yuncore,fap650)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" "wan"
-		;;
-	lg,gapd-7500)
-		ucidef_set_interfaces_lan_wan "lan1 lan2" "wan"
 		;;
 	anysafe,e1|\
 	cmiot,ax18|\
@@ -47,12 +45,14 @@ ipq60xx_setup_interfaces()
 	qihoo,360v6)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
 		;;
-	netgear,wax214|\
+	netgear,wax214)
+		ucidef_set_interfaces_lan_wan "lan"
+		;;
 	netgear,wax610|\
 	netgear,wax610y|\
 	tplink,eap610od|\
-	tplink,eap623od-hd-v1|\
 	tplink,eap620-hd-v3|\
+	tplink,eap623od-hd-v1|\
 	tplink,eap625od-hd-v1)
 		ucidef_set_interface_lan "lan" "dhcp"
 		;;

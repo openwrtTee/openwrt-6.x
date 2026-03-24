@@ -117,6 +117,25 @@ define Device/glinet_gl-axt1800
 endef
 TARGET_DEVICES += glinet_gl-axt1800
 
+define Device/link_nn6000-v1
+	$(call Device/FitImage)
+	$(call Device/EmmcImage)
+	DEVICE_VENDOR := Link
+	DEVICE_MODEL := NN6000 v1
+	SOC := ipq6000
+	KERNEL_SIZE := 6144k
+	DEVICE_DTS_CONFIG := config@cp03-c1
+	DEVICE_PACKAGES := ipq-wifi-link_nn6000 kmod-fs-f2fs f2fs-tools
+	IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-rootfs | append-metadata
+endef
+TARGET_DEVICES += link_nn6000-v1
+
+define Device/link_nn6000-v2
+	$(Device/link_nn6000-v1)
+	DEVICE_MODEL := NN6000 v2
+endef
+TARGET_DEVICES += link_nn6000-v2
+
 define Device/linksys_mr
 	$(call Device/FitImage)
 	DEVICE_VENDOR := Linksys
@@ -240,7 +259,6 @@ endef
 define Device/tplink_eap610od
 	$(call Device/tplink_eap6xx-common)
 	DEVICE_MODEL := EAP610-Outdoor
-	DEVICE_VARIANT := v1
 	DEVICE_PACKAGES += ipq-wifi-tplink_eap610od
 	TPLINK_SUPPORT_STRING := SupportList:\r\n \
 		EAP610-Outdoor(TP-Link|UN|AX1800-D):1.0\r\n \
@@ -384,25 +402,6 @@ define Device/redmi_ax5-jdcloud
 	IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-rootfs | pad-rootfs | pad-to 64k
 endef
 TARGET_DEVICES += redmi_ax5-jdcloud
-
-define Device/link_nn6000-v1
-	$(call Device/FitImage)
-	$(call Device/EmmcImage)
-	DEVICE_VENDOR := Link
-	DEVICE_MODEL := NN6000 v1
-	KERNEL_SIZE := 6144k
-	SOC := ipq6000
-	DEVICE_DTS_CONFIG := config@cp03-c1
-	DEVICE_PACKAGES := ipq-wifi-link_nn6000
-	IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-rootfs | append-metadata
-endef
-TARGET_DEVICES += link_nn6000-v1
-
-define Device/link_nn6000-v2
-	$(Device/link_nn6000-v1)
-	DEVICE_MODEL := NN6000 v2
-endef
-TARGET_DEVICES += link_nn6000-v2
 
 define Device/jdcloud_re-ss-01
 	$(call Device/FitImage)
