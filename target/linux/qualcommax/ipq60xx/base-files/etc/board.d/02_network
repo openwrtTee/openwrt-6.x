@@ -11,9 +11,10 @@ ipq60xx_setup_interfaces()
 	local board="$1"
 
 	case "$board" in
-	link,nn6000-v1|\
 	8devices,mango-dvk|\
-	glinet,gl-axt1800)
+	glinet,gl-axt1800|\
+	link,nn6000-v1|\
+	lg,gapd-7500)
 		ucidef_set_interfaces_lan_wan "lan1 lan2" "wan"
 		;;
 	alfa-network,ap120c-ax)
@@ -23,21 +24,21 @@ ipq60xx_setup_interfaces()
 		ucidef_set_interface_lan "lan1 lan2" "dhcp"
 		;;
 	jdcloud,re-cs-02|\
-	link,nn6000-v2|\
 	glinet,gl-ax1800|\
 	linksys,mr7350|\
 	linksys,mr7500|\
+	link,nn6000-v2|\
 	kt,ar06-012h|\
 	yuncore,fap650)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" "wan"
 		;;
-	lg,gapd-7500)
-		ucidef_set_interfaces_lan_wan "lan1 lan2" "wan"
+	netgear,wax214)
+		ucidef_set_interfaces_lan_wan "lan"
 		;;
-	anysafe,e1|\
-	cmiot,ax18|\
 	jdcloud,re-ss-01|\
 	jdcloud,re-cs-07|\
+	anysafe,e1|\
+	cmiot,ax18|\
 	redmi,ax5|\
 	redmi,ax5-jdcloud|\
 	xiaomi,ax1800|\
@@ -45,12 +46,11 @@ ipq60xx_setup_interfaces()
 	qihoo,360v6)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
 		;;
-	netgear,wax214|\
 	netgear,wax610|\
 	netgear,wax610y|\
-	tplink,eap610od|\
+	tplink,eap610-outdoor|\
 	tplink,eap623od-hd-v1|\
-	tplink,eap625od-hd-v1)
+	tplink,eap625-outdoor-hd-v1)
 		ucidef_set_interface_lan "lan" "dhcp"
 		;;
 	*)
@@ -66,20 +66,20 @@ ipq60xx_setup_macs()
 	local wan_mac=""
 	local label_mac=""
 
-	case "$board" in
+	case $board in
 	alfa-network,ap120c-ax)
-		label_mac=$(mtd_get_mac_binary 0:ART 0x12)
+		label_mac=$(mtd_get_mac_binary 0:ART 12)
 		;;
 	qihoo,360v6)
-		wan_mac=$(mtd_get_mac_ascii factory lanMac)
-		lan_mac=$(macaddr_add "$wan_mac" 1)
-		label_mac=$wan_mac
-		;;
-	tplink,eap610od|\
-	tplink,eap623od-hd-v1|\
-	tplink,eap625od-hd-v1)
-		lan_mac=$(get_mac_binary /tmp/factory_data/default-mac 0)
+		lan_mac=$(mtd_get_mac_ascii factory lanMac)
+		wan_mac=$(macaddr_add "$lan_mac" 1)
 		label_mac=$lan_mac
+		;;
+	tplink,eap610-outdoor|\
+	tplink,eap623od-hd-v1|\
+	tplink,eap625-outdoor-hd-v1)
+		label_mac=$(get_mac_binary /tmp/factory_data/default-mac 0)
+		lan_mac=$label_mac
 		;;
 	esac
 

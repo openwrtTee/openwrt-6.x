@@ -108,18 +108,18 @@ ALLWIFIBOARDS:= \
 	zte_mf287 \
 	zte_mf287plus \
 	zyxel_nbg7815 \
+	jdcloud_re-ss-01 \
+	jdcloud_re-cs-02 \
 	zyxel_nwa210ax \
 	zyxel_scr50axe \
 	anysafe_e1 \
-	cmiot_ax18 \
-	jdcloud_re-ss-01 \
-	jdcloud_re-cs-02 \
 	jdcloud_re-cs-03 \
 	link_nn6000 \
 	redmi_ax5 \
 	redmi_ax5-jdcloud \
 	verizon_cr1000a \
 	xiaomi_ax1800 \
+	cmiot_ax18 \
 	zn_m2
 
 ALLWIFIPACKAGES:=$(foreach BOARD,$(ALLWIFIBOARDS),ipq-wifi-$(BOARD))
