@@ -35,11 +35,13 @@ case "$FIRMWARE" in
 	zn,m2)
 		caldata_extract "0:art" 0x1000 0x10000
 		;;
-	tplink,eap610od|\
-	tplink,eap620-hd-v3|\
-	tplink,eap623od-hd-v1|\
-	tplink,eap625od-hd-v1)
+	tplink,eap610-outdoor|\
+	tplink,eap623-outdoor-hd-v1|\
+	tplink,eap625-outdoor-hd-v1)
 		caldata_from_file "/tmp/factory_data/radio" 0 0x10000
+		;;
+	tplink,eap620-hd-v3)
+		caldata_from_file "/tmp/factory_data/radio" 0 0x20000
 		;;
 	yuncore,fap650)
 		caldata_extract "0:art" 0x1000 0x20000
@@ -59,11 +61,11 @@ case "$FIRMWARE" in
 	cambiumnetworks,xe3-4)
 		caldata_extract "0:ART" 0x26800 0x20000
 		;;
-	linksys,mr7500)
-		caldata_extract "0:art" 0x26800 0x20000
-		;;
 	jdcloud,re-cs-02)
 		caldata_extract_mmc "0:ART" 0x26800 0x20000
+		;;
+	linksys,mr7500)
+		caldata_extract "0:art" 0x26800 0x20000
 		;;
 	esac
 	;;

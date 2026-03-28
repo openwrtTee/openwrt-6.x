@@ -7,7 +7,7 @@ define Build/wax610-netgear-tar
 	md5sum $@.tmp/nand-ipq6018-apps.img | cut -c 1-32 > $@.tmp/nand-ipq6018-apps.md5sum
 	echo "WAX610" > $@.tmp/metadata.txt
 	echo "WAX610-610Y_V99.9.9.9" > $@.tmp/version
-	tar -C $@.tmp/ -cf $@ .
+ 	tar -C $@.tmp/ -cf $@ .
 	rm -rf $@.tmp
 endef
 
@@ -43,7 +43,6 @@ define Device/alfa-network_ap120c-ax
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
 	SOC := ipq6000
-	DEVICE_DTS_CONFIG := config@cp03-c1
 	DEVICE_PACKAGES := ipq-wifi-alfa-network_ap120c-ax
 endef
 TARGET_DEVICES += alfa-network_ap120c-ax
@@ -55,39 +54,11 @@ define Device/cambiumnetworks_xe3-4
 	DEVICE_MODEL := XE3-4
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
-	SOC := ipq6010
 	DEVICE_DTS_CONFIG := config@cp01-c3-xv3-4
-	DEVICE_PACKAGES := ipq-wifi-cambiumnetworks_xe34 ath11k-firmware-qcn9074
+	SOC := ipq6010
+	DEVICE_PACKAGES := ipq-wifi-cambiumnetworks_xe34 ath11k-firmware-qcn9074 kmod-ath11k-pci
 endef
 TARGET_DEVICES += cambiumnetworks_xe3-4
-
-define Device/kt_ar06-012h
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
-	DEVICE_VENDOR := KT
-	DEVICE_MODEL := AR06-012H
-	DEVICE_DTS := ipq6000-kt-ar06-012h
-	BLOCKSIZE := 128k
-	PAGESIZE := 2048
-	SOC := ipq6000
-	DEVICE_DTS_CONFIG := config@cp03-c1
-	DEVICE_PACKAGES := ipq-wifi-kt_ar06-012h
-endef
-TARGET_DEVICES += kt_ar06-012h
-
-define Device/lg_gapd-7500
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
-	DEVICE_VENDOR := LG
-	DEVICE_MODEL := GAPD-7500
-  DEVICE_DTS := ipq6000-lg-gapd-7500
-	BLOCKSIZE := 128k
-	PAGESIZE := 2048
-	SOC := ipq6000
-	DEVICE_DTS_CONFIG := config@cp03-c1
-	DEVICE_PACKAGES := ipq-wifi-lg_gapd-7500 kmod-switch-rtl8367b
-endef
-TARGET_DEVICES += lg_gapd-7500
 
 define Device/glinet_gl-common
 	$(call Device/FitImage)
@@ -95,8 +66,8 @@ define Device/glinet_gl-common
 	DEVICE_VENDOR := GL.iNet
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
-	SOC := ipq6000
 	DEVICE_DTS_CONFIG := config@cp03-c1
+	SOC := ipq6000
 	IMAGES += factory.bin
 	IMAGE/factory.bin := append-ubi | append-gl-metadata
 endef
@@ -150,9 +121,9 @@ endef
 define Device/linksys_mr7350
 	$(call Device/linksys_mr)
 	DEVICE_MODEL := MR7350
-	SOC := ipq6000
 	NAND_SIZE := 256m
 	IMAGE_SIZE := 75776k
+	SOC := ipq6000
 	DEVICE_PACKAGES += ipq-wifi-linksys_mr7350 kmod-leds-pca963x
 endef
 TARGET_DEVICES += linksys_mr7350
@@ -163,7 +134,9 @@ define Device/linksys_mr7500
 	SOC := ipq6018
 	NAND_SIZE := 512m
 	IMAGE_SIZE := 147456k
-	DEVICE_PACKAGES += ipq-wifi-linksys_mr7500 ath11k-firmware-qcn9074
+	DEVICE_PACKAGES += ipq-wifi-linksys_mr7500 \
+		ath11k-firmware-qcn9074 kmod-ath11k-pci \
+		kmod-leds-pwm kmod-phy-aquantia
 endef
 TARGET_DEVICES += linksys_mr7500
 
@@ -199,8 +172,8 @@ define Device/netgear_wax214
 	DEVICE_MODEL := WAX214
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
-	SOC := ipq6010
 	DEVICE_DTS_CONFIG := config@cp03-c1
+	SOC := ipq6010
 	DEVICE_PACKAGES := ipq-wifi-netgear_wax214
 endef
 TARGET_DEVICES += netgear_wax214
@@ -210,8 +183,8 @@ define Device/netgear_wax610-common
 	DEVICE_VENDOR := Netgear
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
-	SOC := ipq6010
 	DEVICE_DTS_CONFIG := config@cp03-c1
+	SOC := ipq6010
 	KERNEL_IN_UBI := 1
 	IMAGES += ui-factory.tar
 	IMAGE/ui-factory.tar := append-ubi | qsdk-ipq-factory-nand | pad-to 4096 | wax610-netgear-tar
@@ -256,46 +229,44 @@ define Device/tplink_eap6xx-common
 	IMAGE/web-ui-factory.bin := append-ubi | tplink-image-2022
 endef
 
-define Device/tplink_eap610od
+define Device/tplink_eap610-outdoor
 	$(call Device/tplink_eap6xx-common)
 	DEVICE_MODEL := EAP610-Outdoor
-	DEVICE_PACKAGES += ipq-wifi-tplink_eap610od
+	DEVICE_PACKAGES += ipq-wifi-tplink_eap610-outdoor
 	TPLINK_SUPPORT_STRING := SupportList:\r\n \
 		EAP610-Outdoor(TP-Link|UN|AX1800-D):1.0\r\n \
 		EAP610-Outdoor(TP-Link|JP|AX1800-D):1.0\r\n \
 		EAP610-Outdoor(TP-Link|CA|AX1800-D):1.0
 endef
-TARGET_DEVICES += tplink_eap610od
+TARGET_DEVICES += tplink_eap610-outdoor
 
-define Device/tplink_eap623od-hd-v1
+define Device/tplink_eap623-outdoor-hd-v1
 	$(call Device/tplink_eap6xx-common)
 	DEVICE_MODEL := EAP623-Outdoor HD
 	DEVICE_VARIANT := v1
-	DEVICE_PACKAGES += ipq-wifi-tplink_eap623od-hd-v1
-	TPLINK_SUPPORT_STRING := SupportList:\r\n \
-		EAP623-Outdoor HD(TP-Link|UN|AX1800-D):1.0
+	DEVICE_PACKAGES += ipq-wifi-tplink_eap623-outdoor-hd-v1
+	TPLINK_SUPPORT_STRING := SupportList:\r\nEAP623-Outdoor HD(TP-Link|UN|AX1800-D):1.0\r\n
 endef
-TARGET_DEVICES += tplink_eap623od-hd-v1
+TARGET_DEVICES += tplink_eap623-outdoor-hd-v1
 
-define Device/tplink_eap625od-hd-v1
+define Device/tplink_eap625-outdoor-hd-v1
 	$(call Device/tplink_eap6xx-common)
 	DEVICE_MODEL := EAP625-Outdoor HD
 	DEVICE_VARIANT := v1
-	DEVICE_PACKAGES += ipq-wifi-tplink_eap625od-hd-v1
+	DEVICE_PACKAGES += ipq-wifi-tplink_eap625-outdoor-hd-v1
 	TPLINK_SUPPORT_STRING := SupportList:\r\n \
 		EAP625-Outdoor HD(TP-Link|UN|AX1800-D):1.0\r\n \
 		EAP625-Outdoor HD(TP-Link|CA|AX1800-D):1.0\r\n \
 		EAP625-Outdoor HD(TP-Link|AU|AX1800-D):1.0\r\n \
 		EAP625-Outdoor HD(TP-Link|KR|AX1800-D):1.0
 endef
-TARGET_DEVICES += tplink_eap625od-hd-v1
+TARGET_DEVICES += tplink_eap625-outdoor-hd-v1
 
 define Device/tplink_eap620-hd-v3
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
 	DEVICE_VENDOR := TP-Link
-	DEVICE_MODEL := EAP620 HD
-	DEVICE_VARIANT := v3
+	DEVICE_MODEL := EAP620 HD v3
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
 	SOC := ipq6018
@@ -324,6 +295,34 @@ define Device/yuncore_fap650
 	IMAGE/factory.ubin := append-ubi | qsdk-ipq-factory-nand
 endef
 TARGET_DEVICES += yuncore_fap650
+
+define Device/kt_ar06-012h
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	DEVICE_VENDOR := KT
+	DEVICE_MODEL := AR06-012H
+	DEVICE_DTS := ipq6000-kt-ar06-012h
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	SOC := ipq6000
+	DEVICE_DTS_CONFIG := config@cp03-c1
+	DEVICE_PACKAGES := ipq-wifi-kt_ar06-012h
+endef
+TARGET_DEVICES += kt_ar06-012h
+
+define Device/lg_gapd-7500
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	DEVICE_VENDOR := LG
+	DEVICE_MODEL := GAPD-7500
+  DEVICE_DTS := ipq6000-lg-gapd-7500
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	SOC := ipq6000
+	DEVICE_DTS_CONFIG := config@cp03-c1
+	DEVICE_PACKAGES := ipq-wifi-lg_gapd-7500 kmod-switch-rtl8367b
+endef
+TARGET_DEVICES += lg_gapd-7500
 
 define Device/anysafe_e1
 	$(call Device/FitImage)
