@@ -41,8 +41,6 @@ ALLWIFIBOARDS:= \
 	dynalink_dl-wrx36 \
 	edgecore_eap102 \
 	edimax_cax1800 \
-	kt_ar06-012h \
-	lg_gapd-7500 \
 	elecom_wrc-x3000gs2 \
 	glinet_gl-ax1800 \
 	glinet_gl-axt1800 \
@@ -90,11 +88,11 @@ ALLWIFIBOARDS:= \
 	spectrum_sax1v1k \
 	tcl_linkhub-hh500v \
 	tplink_deco-x80-5g \
-	tplink_eap610od \
+	tplink_eap610-outdoor \
 	tplink_eap620hd-v1 \
 	tplink_eap620-hd-v3 \
-	tplink_eap623od-hd-v1 \
-	tplink_eap625od-hd-v1 \
+	tplink_eap623-outdoor-hd-v1 \
+	tplink_eap625-outdoor-hd-v1 \
 	tplink_eap660hd-v1 \
 	tplink_archer-c59-v1 \
 	tplink_archer-c6-v2 \
@@ -123,6 +121,8 @@ ALLWIFIBOARDS:= \
 	zyxel_scr50axe \
 	anysafe_e1 \
 	cmiot_ax18 \
+	kt_ar06-012h \
+	lg_gapd-7500 \
 	jdcloud_re-cs-03 \
 	redmi_ax5 \
 	redmi_ax5-jdcloud \
@@ -245,8 +245,6 @@ $(eval $(call generate-ipq-wifi-package,compex_wpq873,Compex WPQ-873))
 $(eval $(call generate-ipq-wifi-package,dynalink_dl-wrx36,Dynalink DL-WRX36))
 $(eval $(call generate-ipq-wifi-package,edgecore_eap102,Edgecore EAP102))
 $(eval $(call generate-ipq-wifi-package,edimax_cax1800,Edimax CAX1800))
-$(eval $(call generate-ipq-wifi-package,kt_ar06-012h,KT AR06-012H))
-$(eval $(call generate-ipq-wifi-package,lg_gapd-7500,LG GAPD-7500))
 $(eval $(call generate-ipq-wifi-package,elecom_wrc-x3000gs2,ELECOM WRC-X3000GS2))
 $(eval $(call generate-ipq-wifi-package,glinet_gl-ax1800,GL.iNet GL-AX1800))
 $(eval $(call generate-ipq-wifi-package,glinet_gl-axt1800,GL.iNet GL-AXT1800))
@@ -294,11 +292,11 @@ $(eval $(call generate-ipq-wifi-package,skspruce_wia3300-20,SKSpruce WIA3300-20)
 $(eval $(call generate-ipq-wifi-package,spectrum_sax1v1k,Spectrum SAX1V1K))
 $(eval $(call generate-ipq-wifi-package,tcl_linkhub-hh500v,TCL LINKHUB HH500V))
 $(eval $(call generate-ipq-wifi-package,tplink_deco-x80-5g,TP-Link Deco X80-5G))
-$(eval $(call generate-ipq-wifi-package,tplink_eap610od,TP-Link EAP610-Outdoor))
+$(eval $(call generate-ipq-wifi-package,tplink_eap610-outdoor,TPLink EAP610-Outdoor))
 $(eval $(call generate-ipq-wifi-package,tplink_eap620hd-v1,TP-Link EAP620 HD v1))
 $(eval $(call generate-ipq-wifi-package,tplink_eap620-hd-v3,TP-Link EAP620 HD v3))
-$(eval $(call generate-ipq-wifi-package,tplink_eap623od-hd-v1,TP-Link EAP623-Outdoor HD v1))
-$(eval $(call generate-ipq-wifi-package,tplink_eap625od-hd-v1,TP-Link EAP625-Outdoor HD v1))
+$(eval $(call generate-ipq-wifi-package,tplink_eap623-outdoor-hd-v1,TP-Link EAP623-Outdoor HD v1))
+$(eval $(call generate-ipq-wifi-package,tplink_eap625-outdoor-hd-v1,TP-Link EAP625-Outdoor HD v1))
 $(eval $(call generate-ipq-wifi-package,tplink_eap660hd-v1,TP-Link EAP660 HD v1))
 $(eval $(call generate-ipq-wifi-package,tplink_archer-c59-v1,TP-Link Archer C59 V1))
 $(eval $(call generate-ipq-wifi-package,tplink_archer-c6-v2,TP-Link Archer C6 V2))
@@ -325,6 +323,8 @@ $(eval $(call generate-ipq-wifi-package,zyxel_nbg7815,Zyxel NBG7815))
 $(eval $(call generate-ipq-wifi-package,zyxel_nwa110ax,Zyxel NWA110AX))
 $(eval $(call generate-ipq-wifi-package,zyxel_nwa210ax,Zyxel NWA210AX))
 $(eval $(call generate-ipq-wifi-package,zyxel_scr50axe,Zyxel SCR50AXE))
+$(eval $(call generate-ipq-wifi-package,kt_ar06-012h,KT AR06-012H))
+$(eval $(call generate-ipq-wifi-package,lg_gapd-7500,LG GAPD-7500))
 $(eval $(call generate-ipq-wifi-package,anysafe_e1,AnySafe E1))
 $(eval $(call generate-ipq-wifi-package,cmiot_ax18,CMIOT AX18))
 $(eval $(call generate-ipq-wifi-package,jdcloud_re-cs-03,JDCloud RE-CS-03))

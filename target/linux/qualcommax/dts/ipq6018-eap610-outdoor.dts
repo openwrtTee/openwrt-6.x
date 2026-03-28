@@ -2,15 +2,14 @@
 
 /dts-v1/;
 
-#include "ipq6018-tplink-eap6xx.dtsi"
+#include "ipq6018-tplink-eap6xx-outdoor.dtsi"
 
 / {
 	model = "TP-Link EAP610-Outdoor";
-	compatible = "tplink,eap610od", "qcom,ipq6018";
+	compatible = "tplink,eap610-outdoor", "qcom,ipq6018";
 };
 
 &wifi {
-	status = "okay";
-	qcom,ath11k-fw-memory-mode = <1>;
+	ieee80211-freq-limit = <2402000 5835000>;
 	qcom,ath11k-calibration-variant = "TP-Link-EAP610-Outdoor";
 };
