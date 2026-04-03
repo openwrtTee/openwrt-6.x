@@ -79,10 +79,9 @@ platform_do_upgrade() {
 		fw_setenv auto_recovery yes
 		nand_do_upgrade "$1"
 		;;
-	tplink,eap610od|\
+	tplink,eap610-outdoor|\
 	tplink,eap623od-hd-v1|\
-	tplink,eap625od-hd-v1)
-		remove_oem_ubi_volume ubi_rootfs
+	tplink,eap625-outdoor-hd-v1)
 		tplink_do_upgrade "$1"
 		;;
 	yuncore,fap650)
