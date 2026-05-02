@@ -118,7 +118,7 @@
  #define QUEUE_STATE_DRV_XOFF	(1 << __QUEUE_STATE_DRV_XOFF)
  #define QUEUE_STATE_STACK_XOFF	(1 << __QUEUE_STATE_STACK_XOFF)
  #define QUEUE_STATE_FROZEN	(1 << __QUEUE_STATE_FROZEN)
-@@ -2028,6 +2058,7 @@ struct net_device {
+@@ -2030,6 +2060,7 @@ struct net_device {
  		unsigned long		priv_flags:32;
  		unsigned long		lltx:1;
  	);
@@ -126,7 +126,7 @@
  	const struct net_device_ops *netdev_ops;
  	const struct header_ops *header_ops;
  	struct netdev_queue	*_tx;
-@@ -2909,6 +2940,10 @@ enum netdev_cmd {
+@@ -2912,6 +2943,10 @@ enum netdev_cmd {
  	NETDEV_OFFLOAD_XSTATS_REPORT_USED,
  	NETDEV_OFFLOAD_XSTATS_REPORT_DELTA,
  	NETDEV_XDP_FEAT_CHANGE,
@@ -760,7 +760,7 @@
  	}
  #undef N
  	return "UNKNOWN_NETDEV_EVENT";
-@@ -12179,7 +12180,7 @@ static void __init net_dev_struct_check(
+@@ -12199,7 +12200,7 @@ static void __init net_dev_struct_check(
  #ifdef CONFIG_NET_XGRESS
  	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_tx, tcx_egress);
  #endif
@@ -884,7 +884,7 @@
  		 timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
  		timeout = timeouts[TCP_CONNTRACK_RETRANS];
  	else
-@@ -1602,6 +1606,9 @@ void nf_conntrack_tcp_init_net(struct ne
+@@ -1598,6 +1602,9 @@ void nf_conntrack_tcp_init_net(struct ne
  	 */
  	tn->tcp_be_liberal = 0;
  
