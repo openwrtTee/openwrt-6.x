@@ -98,7 +98,7 @@ rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wg
 #### 3. Download Source Code and Configure
 ```bash
 # Clone the source code
-git clone -b 25.12-nss --depth 1 --single-branch https://github.com/LiBwrt-op/openwrt-6.x.git libwrt
+git clone -b 25.12-nss --depth 1 --single-branch https://github.com/LiBwrt/LibWrt.git libwrt
 cd libwrt
 
 # Update feeds
