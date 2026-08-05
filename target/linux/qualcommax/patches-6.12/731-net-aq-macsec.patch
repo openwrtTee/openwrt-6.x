@@ -1,0 +1,4 @@
+--- a/drivers/net/phy/aquantia/Makefile
++++ b/drivers/net/phy/aquantia/Makefile
+@@ -1,0 +2,1 @@
++aquantia-objs                   += aqr_macsec/aqr_macsec.o
