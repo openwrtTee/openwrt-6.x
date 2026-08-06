@@ -1,6 +1,6 @@
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
-@@ -34,6 +34,7 @@
+@@ -32,6 +35,7 @@
  #define PHY_ID_AQR813  0x31c31cb2
  #define PHY_ID_AQR112C 0x03a1b790
  #define PHY_ID_AQR112R 0x31c31d12
