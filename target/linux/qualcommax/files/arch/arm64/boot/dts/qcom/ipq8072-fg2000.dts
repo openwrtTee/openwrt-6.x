@@ -285,7 +285,7 @@
 		};
 	};
 	
-	aqr108: ethernet-phy@5 {
+	aqr108: ethernet-phy@7 {
 		compatible = "ethernet-phy-ieee802.3-c45";
 		reg = <7>;
 		reset-gpios = <&tlmm 50 GPIO_ACTIVE_LOW>;
