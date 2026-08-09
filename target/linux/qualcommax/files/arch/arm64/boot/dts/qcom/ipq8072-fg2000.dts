@@ -287,7 +287,7 @@
 	
 	aqr108: ethernet-phy@5 {
 		compatible = "ethernet-phy-ieee802.3-c45";
-		reg = <5>;
+		reg = <7>;
 		reset-gpios = <&tlmm 50 GPIO_ACTIVE_LOW>;
 	};
 };
@@ -362,7 +362,7 @@
 
 		port@6 {
 			port_id = <6>;
-			phy_address = <5>;
+			phy_address = <7>;
 			compatible = "ethernet-phy-ieee802.3-c45";
 			ethernet-phy-ieee802.3-c45;
 		};
