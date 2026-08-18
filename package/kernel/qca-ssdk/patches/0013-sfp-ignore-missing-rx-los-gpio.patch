@@ -1,6 +1,6 @@
 --- a/src/hsl/phy/sfp_phy.c
 +++ b/src/hsl/phy/sfp_phy.c
-@@ -123,8 +123,12 @@ sfp_port_status_get_from_uniphy(a_uint32_t dev_id, a_uint32_t port_id,
+@@ -123,8 +123,12 @@ sfp_port_status_get_from_uniphy(a_uint32
  		{
  			case PORT_SGMII_PLUS:
  			case PORT_10GBASE_R:
