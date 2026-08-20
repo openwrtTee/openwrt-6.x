@@ -63,7 +63,7 @@ spectrum,sax1v1k)
 	ubootenv_add_mmc "0:APPSBLENV" "" "0x0" "0x40000" "0x40000" "1"
 	;;
 inseego,fg2000)
-	ubootenv_add_mmc "0:APPSBLENV" "0x0" "0x10000" "0x10000" "1"
+	ubootenv_add_mmc "0:APPSBLENV" "0x0" "0x20000" "0x10000" "1"
 	;;
 verizon,cr1000a)
 	ubootenv_add_mmc "0:APPSBLENV" "0x0" "0x40000" "0x40000"
