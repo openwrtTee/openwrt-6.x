@@ -40,7 +40,7 @@ Signed-off-by: Mark Ruvald Pedersen <wabsie@gmail.com>
 
 --- a/drivers/net/wireless/ath/ath11k/core.c
 +++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -2363,6 +2363,8 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+@@ -2365,6 +2365,8 @@ static int ath11k_core_reconfigure_on_cr
  {
  	int ret;
  
@@ -49,7 +49,6 @@ Signed-off-by: Mark Ruvald Pedersen <wabsie@gmail.com>
  	mutex_lock(&ab->core_lock);
  	ath11k_thermal_unregister(ab);
  	ath11k_dp_pdev_free(ab);
-
 --- a/drivers/net/wireless/ath/ath11k/dp.h
 +++ b/drivers/net/wireless/ath/ath11k/dp.h
 @@ -7,6 +7,7 @@
@@ -60,7 +59,7 @@ Signed-off-by: Mark Ruvald Pedersen <wabsie@gmail.com>
  #include "hal_rx.h"
  
  #define MAX_RXDMA_PER_PDEV     2
-@@ -72,6 +73,7 @@
+@@ -72,6 +73,7 @@ struct dp_srng {
  
  struct dp_rxdma_ring {
  	struct dp_srng refill_buf_ring;
@@ -83,7 +82,7 @@ Signed-off-by: Mark Ruvald Pedersen <wabsie@gmail.com>
  #include "core.h"
  #include "debug.h"
  #include "debugfs_htt_stats.h"
-@@ -340,6 +342,35 @@
+@@ -340,6 +342,35 @@ static int ath11k_dp_purge_mon_ring(stru
  	return -ETIMEDOUT;
  }
  
@@ -119,7 +118,7 @@ Signed-off-by: Mark Ruvald Pedersen <wabsie@gmail.com>
  /* Returns number of Rx buffers replenished */
  int ath11k_dp_rxbufs_replenish(struct ath11k_base *ab, int mac_id,
  			       struct dp_rxdma_ring *rx_ring,
-@@ -371,8 +402,8 @@
+@@ -371,16 +402,16 @@ int ath11k_dp_rxbufs_replenish(struct at
  	num_remain = req_entries;
  
  	while (num_remain > 0) {
@@ -130,7 +129,6 @@ Signed-off-by: Mark Ruvald Pedersen <wabsie@gmail.com>
  		if (!skb)
  			break;
  
-@@ -379,7 +410,7 @@ int ath11k_dp_rxbufs_replenish(struct ath11k_base *ab, int mac_id,
  		if (!IS_ALIGNED((unsigned long)skb->data,
  				DP_RX_BUFFER_ALIGN_SIZE)) {
 -			skb_pull(skb,
@@ -141,7 +139,8 @@ Signed-off-by: Mark Ruvald Pedersen <wabsie@gmail.com>
 +				    skb->data);
  		}
  
-@@ -453,6 +484,8 @@
+ 		paddr = dma_map_single(ab->dev, skb->data,
+@@ -453,6 +484,8 @@ static int ath11k_dp_rxdma_buf_ring_free
  	idr_destroy(&rx_ring->bufs_idr);
  	spin_unlock_bh(&rx_ring->idr_lock);
  
@@ -150,7 +149,7 @@ Signed-off-by: Mark Ruvald Pedersen <wabsie@gmail.com>
  	return 0;
  }
  
-@@ -2838,8 +2871,8 @@
+@@ -2837,15 +2870,15 @@ static struct sk_buff *ath11k_dp_rx_allo
  	struct sk_buff *skb;
  	dma_addr_t paddr;
  
@@ -161,7 +160,6 @@ Signed-off-by: Mark Ruvald Pedersen <wabsie@gmail.com>
  
  	if (!skb)
  		goto fail_alloc_skb;
-@@ -2846,7 +2879,7 @@ static struct sk_buff *ath11k_dp_rx_alloc_mon_status_buf(struct ath11k_base *ab,
  
  	if (!IS_ALIGNED((unsigned long)skb->data,
  			DP_RX_BUFFER_ALIGN_SIZE)) {
